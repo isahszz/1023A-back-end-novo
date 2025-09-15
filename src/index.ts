@@ -47,4 +47,21 @@ app.listen(8000, () => {
     console.log('Server is running on port 8000');
 });
 
+//Tarefa . Criar uma rota get para produtos que retorne a lista de produtos do banco de dados.
+//O produto deve ter id, nome preco,urlfoto,descricao
+//Deve se criar uma tabela no banco de dados AIVEN para armazenar os produtos
+//A resposta deve ser um array de produtos em formato JSON
+//Crie  o codigo sql para criar a tabela de produtos
+/*
+CREATE TABLE produtos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    preco DECIMAL(10, 2) NOT NULL,
+    urlfoto VARCHAR(255), NOT NULL
+    descricao TEXT
+);
+Faz pelo menos 3 inserçoes nessa tabela 
+*/  
+   
+
 
