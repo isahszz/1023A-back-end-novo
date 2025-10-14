@@ -114,4 +114,4 @@ class CarrinhoController {
   }
 
 }
-export default new CarrinhoController();
+export default new CarrinhoController();    
