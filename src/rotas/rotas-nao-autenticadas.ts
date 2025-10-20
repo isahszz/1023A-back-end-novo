@@ -3,6 +3,6 @@ import { Router} from "express";
 
 const rotasNaoAutenticadas = Router();
 
-rotasNaoAutenticadas.post("/usuarios", usuarioController.login);
+rotasNaoAutenticadas.post("/login", usuarioController.login);
 
 export default rotasNaoAutenticadas;

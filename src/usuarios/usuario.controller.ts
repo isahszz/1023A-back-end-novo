@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { db } from "../database/banco-mongo.js";
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'  
 class UsuarioController {
     async adicionar(req: Request, res: Response) {
         const {nome,idade,email,senha} = req.body
@@ -28,9 +29,13 @@ class UsuarioController {
         if(!usuario)
             return res.status(400).json({mensagem:"Usuário incorreto!"})
         const senhaValida = await bcrypt.compare(senha,usuario.senha)
+        if(!senhaValida)
+            return res.status(400).json({mensagem:"Senha incorreta!"})
         //criar um TOKEN
-        
+const token = jwt.sign({usuarioId:usuario._id},process.env.JWT_SECRET!,{expiresIn:'1h'})
+
         //Devolver token
+        res.status(200).json({token})
     }
 }
 export default new UsuarioController();
