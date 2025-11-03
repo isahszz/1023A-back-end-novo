@@ -13,7 +13,7 @@ rotasAutenticadas.get("/usuarios", usuarioController.listar);
 
 //rotasAutenticadas para produtos
 rotasAutenticadas.post("/produtos", produtoController.adicionar);
-rotasAutenticadas.get("/produtos", produtoController.listar);
+
 
 
 //Ainda vamos ter que criar as rotasAutenticadas para carrinho e produtos

@@ -6,6 +6,7 @@ import Auth from './middleware/auth.js';
 import cors from 'cors';    
 
 const app = express();
+app.use(cors())
 app.use(express.json());
 
 app.use(rotasNaoAutenticadas)
