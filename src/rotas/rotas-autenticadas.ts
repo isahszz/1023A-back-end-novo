@@ -1,23 +1,20 @@
+import { Router } from "express";
 import usuarioController from "../usuarios/usuario.controller.js";
 import produtoController from "../produtos/produto.controller.js";
-
-import { Router} from "express";
 import carrinhoController from "../carrinho/carrinho.controller.js";
 
 const rotasAutenticadas = Router();
 
-//Criando rotasAutenticadas para os usuários
+// Rotas autenticadas para usuários
 rotasAutenticadas.post("/usuarios", usuarioController.adicionar);
-rotasAutenticadas.get("/usuarios", usuarioController.listar);
+rotasAutenticadas.get("/usuarios", usuarioController.listarTodos);
 
-
-//rotasAutenticadas para produtos
+// Rotas autenticadas para produtos
 rotasAutenticadas.post("/produtos", produtoController.adicionar);
 rotasAutenticadas.get("/produtos", produtoController.listar);
 
-
-//Ainda vamos ter que criar as rotasAutenticadas para carrinho e produtos
+// Rotas autenticadas para carrinho
 rotasAutenticadas.post("/adicionarItem", carrinhoController.adicionarItem);
-//Tarefa para casa :)
+rotasAutenticadas.get("/carrinho", carrinhoController.listar);
 
 export default rotasAutenticadas;
