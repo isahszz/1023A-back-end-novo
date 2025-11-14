@@ -7,6 +7,4 @@ const rotaAdmin = Router();
 rotaAdmin.get("/usuarios", verificaAdmin, usuarioController.listarTodos);
 // rotaAdmin.delete("/usuarios/:id", verificaAdmin, usuarioController.excluir); // opcional
 
-
-
 export default rotaAdmin;

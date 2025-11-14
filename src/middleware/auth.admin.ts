@@ -15,7 +15,7 @@ export function verificaAdmin(req: Request, res: Response, next: NextFunction) {
     }
 
     // opcional: anexa infos do usuário na requisição
-    (req as any).usuario = { id: decoded.id, tipo: decoded.tipo, nome: decoded.nome };
+    (req as any).usuario = { usuarioId: decoded.usuarioId, tipo: decoded.tipo };
 
     next();
   } catch (err) {
