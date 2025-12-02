@@ -9,16 +9,16 @@ export function verificaAdmin(req: Request, res: Response, next: NextFunction) {
   try {
     const segredo = process.env.JWT_SECRET || "segredo";
     const decoded = jwt.verify(token, segredo) as any;
-
+    console.log(decoded);
     if (decoded?.tipo !== "admin") {
       return res.status(403).json({ mensagem: "Acesso negado: apenas administradores." });
     }
 
-    // opcional: anexa infos do usuário na requisição
-    (req as any).usuario = { usuarioId: decoded.usuarioId, tipo: decoded.tipo };
+    (req as any).tipo = decoded.tipo;
 
     next();
   } catch (err) {
     return res.status(401).json({ mensagem: "Token inválido." });
   }
 }
+export default verificaAdmin;

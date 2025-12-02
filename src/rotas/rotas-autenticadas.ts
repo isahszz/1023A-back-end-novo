@@ -12,11 +12,11 @@ rotasAutenticadas.delete('/carrinho/:usuarioId',carrinhoController.remover)
 
 // Rotas autenticadas para produtos
 rotasAutenticadas.post("/produtos", produtoController.adicionar);
-rotasAutenticadas.get("/produtos", produtoController.listar);
+
 
 // Rotas autenticadas para carrinho
 rotasAutenticadas.post("/adicionarItem", carrinhoController.adicionarItem);
 rotasAutenticadas.get("/carrinho", carrinhoController.listar);
-rotasAutenticadas.post('/removerItem',carrinhoController.removerItem)
+
 
 export default rotasAutenticadas;

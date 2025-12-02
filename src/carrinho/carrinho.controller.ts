@@ -132,7 +132,9 @@ class CarrinhoController {
             return res.status(404).json({ mensagem: "Carrinho não encontrado" });
         }
         return res.status(200).json({ mensagem: "Carrinho removido com sucesso" });
+        
     }
+ 
 
 }
 export default new CarrinhoController();    

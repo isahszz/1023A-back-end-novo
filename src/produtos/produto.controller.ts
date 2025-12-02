@@ -11,6 +11,7 @@ class ProdutoController {
         const produtos = await db.collection('produtos').find().toArray();
         res.status(200).json(produtos);
     }
+    
 }
 export default new ProdutoController();
 
