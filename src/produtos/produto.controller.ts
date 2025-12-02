@@ -11,7 +11,12 @@ class ProdutoController {
         const produtos = await db.collection('produtos').find().toArray();
         res.status(200).json(produtos);
     }
-    
+    async remover (req: Request, res: Response) {
+        const {nome,preco,descricao,urlfoto} = req.body
+        const produto = {nome,preco,descricao,urlfoto};
+        const resposta = await db.collection('produtos').insertOne(produto)
+        res.status(201).json({...produto, _id: resposta.insertedId})
+    }
 }
 export default new ProdutoController();
 

@@ -23,8 +23,8 @@ interface Produto {
   descricao: string,
   urlfoto: string
 }
-interface RequestAuth extends Request{
-    usuarioId?:string
+interface RequestAuth extends Request {
+  usuarioId?: string
 }
 
 class CarrinhoController {
@@ -111,30 +111,58 @@ class CarrinhoController {
   }
   //listar carrinhos
   async listar(req: RequestAuth, res: Response) {
-        const  usuarioId  = req.usuarioId;
-        if(!usuarioId){
-            return res.status(400).json({mensagem: 'ID do usuário é obrigatório'});
-        }
-        const carrinho = await db.collection<Carrinho>("carrinhos").findOne({usuarioId: usuarioId});
-        if(!carrinho){
-            return res.status(404).json({mensagem: 'Carrinho não encontrado'});
-        }
-        return res.status(200).json(carrinho);
+    const usuarioId = req.usuarioId;
+    if (!usuarioId) {
+      return res.status(400).json({ mensagem: 'ID do usuário é obrigatório' });
+    }
+    const carrinho = await db.collection<Carrinho>("carrinhos").findOne({ usuarioId: usuarioId });
+    if (!carrinho) {
+      return res.status(404).json({ mensagem: 'Carrinho não encontrado' });
+    }
+    return res.status(200).json(carrinho);
   }
   remover(req: Request, res: Response) {
     const { usuarioId } = req.params;
   }
- //remover                -> Remover o carrinho todo
-    async delete(req:Request, res:Response) {
-        const { usuarioId } = req.params;
-        const resultado = await db.collection("carrinhos").deleteOne({ usuarioId: usuarioId });
-        if (resultado.deletedCount === 0) {
-            return res.status(404).json({ mensagem: "Carrinho não encontrado" });
-        }
-        return res.status(200).json({ mensagem: "Carrinho removido com sucesso" });
-        
+  //remover                -> Remover o carrinho todo
+  async delete(req: Request, res: Response) {
+    const { usuarioId } = req.params;
+    const resultado = await db.collection("carrinhos").deleteOne({ usuarioId: usuarioId });
+    if (resultado.deletedCount === 0) {
+      return res.status(404).json({ mensagem: "Carrinho não encontrado" });
     }
- 
+    return res.status(200).json({ mensagem: "Carrinho removido com sucesso" });
+
+  }
+  //removerItem
+  async removerprodu(req: RequestAuth, res: Response) {
+    const usuarioId = req.usuarioId;
+    const produtoId = req.params.produtoId;
+
+    if (!usuarioId) {
+      return res.status(401).json({ mensagem: "Usuário não autenticado" });
+    }
+
+    const carrinho = await db.collection<Carrinho>("carrinhos").findOne({ usuarioId });
+    if (!carrinho) return res.status(404).json({ mensagem: "Carrinho não encontrado" });
+
+    const itensAtualizados = carrinho.itens.filter((i) => i.produtoId !== produtoId);
+
+    const total = itensAtualizados.reduce(
+      (acc, item) => acc + item.precoUnitario * item.quantidade,
+      0
+    );
+
+    await db.collection("carrinhos").updateOne(
+      { usuarioId },
+      { $set: { itens: itensAtualizados, total, dataAtualizacao: new Date() } }
+    );
+
+    return res.status(200).json({ mensagem: "Item removido com sucesso" });
+  }
+
+
+
 
 }
 export default new CarrinhoController();    
