@@ -29,6 +29,7 @@ class UsuarioController {
     res.status(200).json(usuarios);
   }
 
+  //excluir
   async excluir(req: Request, res: Response) {
     const { id } = req.params;
     const { ObjectId } = await import("bson");

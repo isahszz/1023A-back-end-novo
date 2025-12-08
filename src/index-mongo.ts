@@ -6,6 +6,11 @@ import Auth from './middleware/auth.js';
 import cors from 'cors';    
 import  verificaAdmin  from "./middleware/auth.admin.js";
 import rotasAdmin from './rotas/rotas.admin.js';
+import Stripe from 'stripe';
+
+
+
+
 
 const app = express();
 app.use(cors())

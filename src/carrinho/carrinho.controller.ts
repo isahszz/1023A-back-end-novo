@@ -29,8 +29,12 @@ interface RequestAuth extends Request {
 
 class CarrinhoController {
   //adicionarItem
-  async adicionarItem(req: Request, res: Response) {
-    const { usuarioId, produtoId, quantidade } = req.body as { usuarioId: string, produtoId: string, quantidade: number };
+  async adicionarItem(req: RequestAuth, res: Response) {
+      const usuarioId = req.usuarioId;
+    if (!usuarioId) {
+      return res.status(400).json({ mensagem: 'ID do usuário é obrigatório' });
+    }
+    const { produtoId, quantidade } = req.body as { produtoId: string, quantidade: number };
     console.log(usuarioId, produtoId, quantidade)
 
     //Buscar o produto no banco de dados
@@ -134,8 +138,19 @@ class CarrinhoController {
     return res.status(200).json({ mensagem: "Carrinho removido com sucesso" });
 
   }
+
+  // buscar produto 
+  async buscarProduto(req: Request, res: Response) {
+  console.log("Buscando produtos");
+  
+  
+
+
+  }
+
   //removerItem
-  async removerprodu(req: RequestAuth, res: Response) {
+  async removerproduto(req: RequestAuth, res: Response) {
+    console.log("Removendo produto do carrinho");
     const usuarioId = req.usuarioId;
     const produtoId = req.params.produtoId;
 
@@ -157,11 +172,11 @@ class CarrinhoController {
       { usuarioId },
       { $set: { itens: itensAtualizados, total, dataAtualizacao: new Date() } }
     );
-
-    return res.status(200).json({ mensagem: "Item removido com sucesso" });
+    carrinho.itens = itensAtualizados;
+    carrinho.total = total;
+    carrinho.dataAtualizacao = new Date();
+    return res.status(200).json(carrinho);
   }
-
-
 
 
 }
