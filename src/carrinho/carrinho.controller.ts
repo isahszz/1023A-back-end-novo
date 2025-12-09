@@ -169,33 +169,7 @@ class CarrinhoController {
     return res.status(200).json(carrinho);
   }
 
-  // buscar produto
-  async buscarProduto(req: Request, res: Response) {
-    console.log("Buscando produtos");
-
-    try {
-      const termo = req.query.termo as string;
-
-      if (!termo || termo.trim() === "") {
-        return res.status(400).json({ mensagem: "Termo de busca é obrigatório" });
-      }
-
-      // Busca por nome ou categoria
-      const produtos = await db.collection<Produto>("produtos").find({
-        $or: [
-          { nome: { $regex: termo, $options: "i" } },
-          { categoria: { $regex: termo, $options: "i" } }
-        ]
-      }).toArray();
-
-      return res.status(200).json(produtos);
-
-    } catch (erro) {
-      console.error("Erro ao buscar produtos:", erro);
-      return res.status(500).json({ mensagem: "Erro interno do servidor" });
-    }
-  }
-
+  
 
 }
 
