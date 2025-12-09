@@ -30,7 +30,7 @@ interface RequestAuth extends Request {
 class CarrinhoController {
   //adicionarItem
   async adicionarItem(req: RequestAuth, res: Response) {
-      const usuarioId = req.usuarioId;
+    const usuarioId = req.usuarioId;
     if (!usuarioId) {
       return res.status(400).json({ mensagem: 'ID do usuário é obrigatório' });
     }
@@ -139,15 +139,6 @@ class CarrinhoController {
 
   }
 
-  // buscar produto 
-  async buscarProduto(req: Request, res: Response) {
-  console.log("Buscando produtos");
-  
-  
-
-
-  }
-
   //removerItem
   async removerproduto(req: RequestAuth, res: Response) {
     console.log("Removendo produto do carrinho");
@@ -178,6 +169,34 @@ class CarrinhoController {
     return res.status(200).json(carrinho);
   }
 
+  // buscar produto
+  async buscarProduto(req: Request, res: Response) {
+    console.log("Buscando produtos");
+
+    try {
+      const termo = req.query.termo as string;
+
+      if (!termo || termo.trim() === "") {
+        return res.status(400).json({ mensagem: "Termo de busca é obrigatório" });
+      }
+
+      // Busca por nome ou categoria
+      const produtos = await db.collection<Produto>("produtos").find({
+        $or: [
+          { nome: { $regex: termo, $options: "i" } },
+          { categoria: { $regex: termo, $options: "i" } }
+        ]
+      }).toArray();
+
+      return res.status(200).json(produtos);
+
+    } catch (erro) {
+      console.error("Erro ao buscar produtos:", erro);
+      return res.status(500).json({ mensagem: "Erro interno do servidor" });
+    }
+  }
+
 
 }
+
 export default new CarrinhoController();    

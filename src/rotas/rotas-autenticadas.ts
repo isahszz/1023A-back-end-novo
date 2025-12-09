@@ -20,6 +20,7 @@ rotasAutenticadas.post("/produtos", produtoController.adicionar);
 rotasAutenticadas.post("/adicionarItem", carrinhoController.adicionarItem);
 rotasAutenticadas.get("/carrinho", carrinhoController.listar);
 rotasAutenticadas.delete("/carrinho/remover/:produtoId", carrinhoController.removerproduto);
+rotasAutenticadas.get("/produtos/buscar", carrinhoController.buscarProduto);
 
 rotasAutenticadas.post("/criar-pagamento-cartao", async (req, res) => {
   //Buscar o carrinho do usuário que está no token para pegar o amount
