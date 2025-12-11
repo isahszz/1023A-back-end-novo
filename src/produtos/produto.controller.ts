@@ -1,5 +1,14 @@
 import { Request, Response } from "express";
 import { db } from "../database/banco-mongo.js";
+import { ObjectId } from "bson";
+
+interface Produto {
+  _id: ObjectId;
+  nome: string,
+  preco: number,
+  descricao: string,
+  urlfoto: string
+}
 class ProdutoController {
     async adicionar(req: Request, res: Response) {
         const { nome, preco, descricao, urlfoto } = req.body
